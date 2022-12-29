@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/carjavi/nodejs-code/master/img/nodejs.png" height="100" alt=" " /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/carjavi/nodejs-code/master/img/nodejs.png" height="200" alt=" " /></p>
 <br>
 <h1 align="center">Nodejs code</h1> 
 <h4 align="right">Dic 22</h4>
