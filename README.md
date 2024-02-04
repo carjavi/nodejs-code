@@ -12,7 +12,71 @@
 
 <br>
 
+# Serve Static Files in Express
 
+```
+/**
+ * @author Carlos Briceño
+ * Server
+ */
+const express      = require('express');
+const http         = require('http');
+const WebSocket    = require('ws');
+var wsocket = null;
+
+const app=express();
+app.use(express.static(__dirname + '/build/'));
+app.use(express.static(__dirname + '/build/static/css'));
+app.use(express.static(__dirname + '/build/static/js'));
+app.use(express.static(__dirname + '/build/static/media'));
+
+app.get('/', function (req, res) {
+    res.sendFile("/build/index.html", {});
+});
+
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', function connection(ws,req) {
+    console.log("Conected: ", wss.clients.size);
+
+        ws.on('message', function incoming(message) {
+            var event = JSON.parse(message);
+
+            console.log("key: " + event.action +" value: ",event.value);
+                
+                wss.clients.forEach(function each(client) {
+                    if (client !== ws) { // client !== ws && client.readyState === WebSocket.OPEN
+                        client.send(JSON.stringify({accion:event.action,timeoutSpeak:event.value}));
+                      }
+                });
+        });
+});
+
+server.listen(8080, function listening() {
+    console.log("Web server Active listening on " + server.address().port);
+});
+```
+
+```
+Structuring Your Files
+express-static-file-tutorial
+  |- index.js
+  |- public
+    |- shark.png
+    |- index.html
+
+
+/GUI-face
+   /server.js
+   /build
+      /index.html
+      /emoji
+      /js
+
+```
+<br>
 
 # Async Await de JavaScript
 
